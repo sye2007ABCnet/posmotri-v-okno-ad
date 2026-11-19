@@ -2,88 +2,182 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Настройка области просмотра: ширина страницы равна ширине экрана устройства,
+         начальный масштаб — 100%. -->
     <title>Посмотри в окно</title>
+    <!-- Заголовок вкладки браузера. -->
     <link rel="stylesheet" href="./fonts/fonts.css" />
+    <!-- Подключение шрифтов проекта (Fira Sans Condensed и Oswald) через правила @font-face. -->
     <link rel="stylesheet" href="./styles/style.css" />
+    <!-- Основная таблица стилей. -->
     <link rel="stylesheet" href="./styles/preloader.css" />
+    <!-- Готовые стили и анимация индикатора загрузки. -->
     <link rel="stylesheet" href="./styles/error.css" />
+    <!-- Готовые стили сообщения об ошибке поверх видеоблока. -->
   </head>
+
   <body class="page">
+    <!-- BODY — видимая часть страницы. -->
+
     <main class="content">
+      <!-- MAIN — основной контент страницы.
+           .content — флекс-контейнер из двух колонок:
+           слева большое видео с формой поиска, справа заголовок и список карточек. -->
+
+      <!-- ==================== ЛЕВАЯ КОЛОНКА: ВИДЕО + ПОИСК ==================== -->
       <section class="result">
+        <!-- SECTION — смысловой раздел страницы. Здесь: видео и форма поиска под ним. -->
+
         <div class="result__video-container">
-          <video src="" controls class="result__video" poster=""></video>
+          <!-- Обёртка большого видео. -->
+          <video class="result__video" controls></video>
+          <!-- Большое видео. Атрибут controls включает родные элементы управления плеером
+               (воспроизведение, громкость, полный экран). Атрибуты src (адрес видео) и poster
+               (заставка) подставляет готовый скрипт, когда пользователь выбирает карточку. -->
         </div>
+
         <form class="search-form">
+          <!-- ФОРМА ПОИСКА: город + время суток + кнопка «Найти».
+               Готовый скрипт перехватывает отправку формы и подбирает видео по заданным условиям. -->
+
           <fieldset class="search-form__fieldset">
+            <!-- FIELDSET — смысловая группа связанных полей формы.
+                 Первая группа — ввод города. -->
             <h2 class="search-form__fieldset-title">Город</h2>
+            <!-- Видимая подпись группы полей. -->
             <label class="search-form__label">
-              <span class="search-form__label-text visually-hidden">Город</span>
+              <!-- LABEL связывает подпись с полем ввода: клик по подписи ставит курсор в поле,
+                 а скринридер зачитывает подпись, когда поле в фокусе. -->
+              <span class="visually-hidden">Город</span>
+              <!-- Невидимая подпись для программ чтения с экрана. -->
               <input
-                type="text"
-                placeholder="Санкт Петербург, например"
-                name="city"
                 class="search-form__textfield"
+                type="text"
+                name="city"
+                placeholder="Санкт Петербург, например"
               />
+              <!-- Текстовое поле. type="text" — обычный ввод строки;
+                   name="city" — имя параметра, по которому скрипт понимает, что это город;
+                   placeholder — серая подсказка внутри пустого поля. -->
             </label>
           </fieldset>
+
           <fieldset class="search-form__fieldset">
+            <!-- Вторая группа полей — выбор времени суток. -->
             <h2 class="search-form__fieldset-title">Время суток</h2>
-            <div class="search-form__checkbox-list">
-              <label class="search-form__label">
-                <input
-                  type="checkbox"
-                  name="time"
-                  value="morning"
-                  class="search-form__checkbox visually-hidden"
-                />
-                <span class="search-form__pseudo-checkbox"></span>
-                <span class="search-form__label-text">Утро</span>
-              </label>
-              <label class="search-form__label">
-                <input
-                  type="checkbox"
-                  name="time"
-                  value="afternoon"
-                  class="search-form__checkbox visually-hidden"
-                />
-                <span class="search-form__pseudo-checkbox"></span>
-                <span class="search-form__label-text">День</span>
-              </label>
-              <label class="search-form__label">
-                <input
-                  type="checkbox"
-                  name="time"
-                  value="night"
-                  class="search-form__checkbox visually-hidden"
-                />
-                <span class="search-form__pseudo-checkbox"></span>
-                <span class="search-form__label-text">Ночь</span>
-              </label>
-            </div>
+            <ul class="search-form__checkbox-list">
+              <!-- Список вариантов «Утро / День / Ночь». -->
+              <li class="search-form__checkbox-list-item">
+                <label class="search-form__label">
+                  <!-- LABEL оборачивает и квадратик, и слово — вся подпись является
+                     кликабельной областью: достаточно нажать на слово «Утро». -->
+                  <input
+                    class="search-form__checkbox visually-hidden"
+                    type="checkbox"
+                    name="time"
+                    value="morning"
+                  />
+                  <!-- Чекбокс. Класс visually-hidden прячет его только визуально:
+                       он по-прежнему работает с клавиатуры (Tab + пробел) и читается скринридером. -->
+                  <span class="search-form__pseudo-checkbox"></span>
+                  <!-- Нарисованный квадратик вместо стандартного чекбокса (стандартный нельзя
+                     стилизовать под макет). -->
+                  <span class="search-form__label-text">Утро</span>
+                  <!-- Видимый текст подписи. При наведении на любую часть label
+                     подчёркивается именно этот span. -->
+                </label>
+              </li>
+              <li class="search-form__checkbox-list-item">
+                <label class="search-form__label">
+                  <!-- Скрытый настоящий чекбокс + нарисованный квадратик + текст. -->
+                  <input
+                    class="search-form__checkbox visually-hidden"
+                    type="checkbox"
+                    name="time"
+                    value="afternoon"
+                  />
+                  <span class="search-form__pseudo-checkbox"></span>
+                  <span class="search-form__label-text">День</span>
+                </label>
+              </li>
+              <li class="search-form__checkbox-list-item">
+                <label class="search-form__label">
+                  <input
+                    class="search-form__checkbox visually-hidden"
+                    type="checkbox"
+                    name="time"
+                    value="night"
+                  />
+                  <span class="search-form__pseudo-checkbox"></span>
+                  <span class="search-form__label-text">Ночь</span>
+                </label>
+              </li>
+            </ul>
           </fieldset>
-          <button type="submit" class="button search-form__submit-button">
+
+          <button class="search-form__submit-button button" type="submit">
             Найти
           </button>
+          <!-- type="submit" — кнопка отправляет форму, то есть запускает поиск. -->
         </form>
       </section>
+
+      <!-- ==================== ПРАВАЯ КОЛОНКА: ЗАГОЛОВОК + СПИСОК ==================== -->
       <section class="content__details">
+        <!-- Правая колонка: крупный заголовок и прокручиваемый список карточек видео. -->
+
         <h1 class="title">
           <span class="content__accent">По-</span><br />смотри<br />в окно
         </h1>
-        <div class="content__list-container">
-          <ul class="content__list">
-            <!-- ЗДЕСЬ ОКАЖУТСЯ ТЕМПЛЕЙТЫ КАРТОЧЕК -->
-          </ul>
+        <!-- Главный заголовок страницы.
+             span.content__accent красит «По-» в серый цвет — акцент из макета.
+             Два <br /> делят заголовок на три строки: «По-», «смотри», «в окно». -->
+
+        <div class="content__list-container custom-scrollbar">
+          <!-- Прокручиваемая область фиксированной высоты.
+             Класс custom-scrollbar перекрашивает полосу прокрутки под тёмный дизайн.
+             Прокручивается только список: заголовок и большое видео остаются на месте. -->
+          <ul class="content__list"></ul>
+          <!-- Список карточек видео. В разметке он пустой: после поиска готовый скрипт
+               клонирует карточки из шаблона .cards-list-item-template и вставляет их сюда.
+               Кнопку «Показать еще» скрипт добавит сам, если есть следующая страница. -->
         </div>
       </section>
     </main>
 
-    <!-- ТЕМПЛЕЙТЫ -->
+    <!-- ==================== ШАБЛОНЫ ДЛЯ СКРИПТА ==================== -->
+    <!-- TEMPLATE — «заготовка» разметки. Браузер не отображает её содержимое на странице.
+         Готовый скрипт клонирует содержимое шаблонов, наполняет данными и вставляет в нужное место. -->
 
-    <template class="preloader-template">
+    <!-- Классы шаблонов нужны скрипту для поиска заготовок: их нельзя переименовывать
+         без соответствующего изменения JavaScript. -->
+    <template id="video-card-template" class="cards-list-item-template">
+      <!-- Шаблон одной карточки видео для списка справа. -->
+      <li class="content__list-item">
+        <a class="content__card-link" href="#0">
+          <!-- Ссылка оборачивает всю карточку целиком: клик в любом её месте выбирает видео.
+             Выбранной карточке скрипт добавляет класс-модификатор content__card-link_current. -->
+          <article class="content__video-card">
+            <!-- ARTICLE — самостоятельная единица контента: карточка одного видео. -->
+            <div class="content__video-card-description-container">
+              <h2 class="content__video-card-title"></h2>
+              <!-- Название видео/города — текст подставит скрипт. Длинное название
+                 обрезается многоточием (см. стили .content__video-card-title). -->
+              <p class="content__video-card-description"></p>
+              <!-- Описание видео — текст подставит скрипт. Показывается максимум две строки. -->
+            </div>
+            <img class="content__video-card-thumbnail" src="" alt="" />
+            <!-- Превью видео. Атрибуты src (адрес картинки) и alt (текстовое описание
+                 для скринридеров и на случай ошибки загрузки) заполняет скрипт. -->
+          </article>
+        </a>
+      </li>
+    </template>
+
+    <template id="preloader-template" class="preloader-template">
+      <!-- Шаблон индикатора загрузки. Скрипт показывает его внутри видеоблока,
+           пока идёт поиск/загрузка данных. -->
       <div class="preloader">
         <div class="preloader-chasing-squares">
           <div class="square"></div>
@@ -94,28 +188,22 @@
       </div>
     </template>
 
-    <template class="cards-list-item-template">
-      <li class="content__list-item">
-        <a href="#0" class="content__card-link">
-          <article class="content__video-card">
-            <div class="content__video-card-description-container">
-              <h2 class="content__video-card-title"></h2>
-              <p class="content__video-card-description"></p>
-            </div>
-            <img src="" alt="" class="content__video-card-thumbnail" />
-          </article>
-        </a>
-      </li>
-    </template>
     <template class="more-button-template">
-      <button class="button more-button">Показать еще</button>
+      <!-- Скрипт добавляет эту кнопку после списка, когда доступны ещё видео.
+           type="button" означает, что кнопка не отправляет форму поиска. -->
+      <button class="more-button button" type="button">Показать еще</button>
     </template>
 
-    <template class="error-template">
+    <template id="error-template" class="error-template">
+      <!-- Шаблон сообщения об ошибке: показывается, если по запросу видео не нашлось. -->
       <div class="error">
+        <!-- Скрипт меняет текст именно у элемента с классом error__title. -->
         <h2 class="error__title">Из этого города нет видео :(</h2>
       </div>
     </template>
+
     <script src="./scripts/script.js"></script>
+    <!-- Готовый скрипт проекта: поиск видео, отрисовка карточек, переключение большого плеера,
+         прелоадер и ошибки. -->
   </body>
 </html>
